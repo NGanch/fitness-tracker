@@ -1,5 +1,6 @@
 {
   "name": "mobile",
+  "private": true,
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
@@ -44,6 +45,5 @@
     "eslint-config-expo": "~10.0.0",
     "tailwindcss": "^4.1.18",
     "typescript": "~5.9.2"
-  },
-  "private": true
+  }
 }

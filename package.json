@@ -1,10 +1,15 @@
 {
   "name": "fitness-tracker",
+  "private": true,
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev:web": "pnpm --filter web dev",
+    "dev:mobile": "pnpm --filter mobile start",
+    "dev:backend": "pnpm --filter backend dev",
+    "build": "pnpm -r build",
+    "tw:init": "tailwindcss init -w"
   },
   "repository": {
     "type": "git",
@@ -17,5 +22,15 @@
   "bugs": {
     "url": "https://github.com/NGanch/fitness-tracker/issues"
   },
-  "homepage": "https://github.com/NGanch/fitness-tracker#readme"
+  "homepage": "https://github.com/NGanch/fitness-tracker#readme",
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "ts-node-dev": "^2.0.0",
+    "tsx": "^4.21.0"
+  },
+  "dependencies": {
+    "@sentry/node": "^10.40.0",
+    "@sentry/react": "^10.40.0",
+    "@sentry/tracing": "^7.120.4"
+  }
 }
