@@ -1,11 +1,10 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   content: [
-    './apps/web/**/*.{js,ts,jsx,tsx}',
-    './apps/mobile/**/*.{js,ts,jsx,tsx}', // якщо хочеш використовувати Tailwind у mobile
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {},
   },
   plugins: [],
-};
+}
