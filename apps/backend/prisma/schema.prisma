@@ -1,0 +1,91 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  USER
+  COACH
+  ADMIN
+}
+
+enum FriendRequestStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+
+  role      UserRole @default(USER)
+
+  createdEvents Event[] @relation("EventAuthor")
+  joinedEvents  EventParticipant[]
+
+  sentFriendRequests     FriendRequest[] @relation("Sender")
+  receivedFriendRequests FriendRequest[] @relation("Receiver")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model FriendRequest {
+  id Int @id @default(autoincrement())
+
+  senderId   Int
+  receiverId Int
+
+  sender   User @relation("Sender", fields: [senderId], references: [id])
+  receiver User @relation("Receiver", fields: [receiverId], references: [id])
+
+  status FriendRequestStatus @default(PENDING)
+
+  createdAt DateTime @default(now())
+
+  @@unique([senderId, receiverId])
+}
+
+model Event {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+
+  category    String
+  location    String?
+  startDate   DateTime
+  duration    Int?
+  maxPeople   Int?
+
+  authorId Int
+  author   User @relation("EventAuthor", fields: [authorId], references: [id])
+
+  participants EventParticipant[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model EventParticipant {
+  id Int @id @default(autoincrement())
+
+  userId  Int
+  eventId Int
+
+  user  User  @relation(fields: [userId], references: [id])
+  event Event @relation(fields: [eventId], references: [id])
+
+  joinedAt DateTime @default(now())
+
+  @@unique([userId, eventId])
+}
